@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dominik Brozman — Fotografie</title>
+<meta name="description" content="Fotografie architektury — beton, sklo, cihly a světlo. Portfolio Dominika Brozmana.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0d0c; --bg2:#151513; --fg:#ecebe6; --mute:#8d8b84; --line:#2a2a27;
+    --accent:#c8553d; /* cihlová */
+    --sans:'Archivo',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  /* NAV */
+  nav{position:fixed;inset:0 0 auto 0;z-index:20;display:flex;justify-content:space-between;align-items:center;
+      padding:18px clamp(18px,4vw,48px);font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+      transition:background .3s, border-color .3s;border-bottom:1px solid transparent}
+  nav.solid{background:rgba(13,13,12,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-color:var(--line)}
+  nav .logo{font-family:var(--sans);font-weight:900;font-size:15px;letter-spacing:.04em}
+  nav .links{display:flex;gap:clamp(14px,3vw,32px)}
+  nav .links a{opacity:.75;transition:opacity .2s}
+  nav .links a:hover{opacity:1}
+
+  /* HERO */
+  .hero{position:relative;height:100svh;min-height:560px;overflow:hidden}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.08) brightness(.72);
+            transform:scale(1.06);animation:zoom 14s ease-out forwards}
+  @keyframes zoom{to{transform:scale(1)}}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,13,12,.35) 0%,rgba(13,13,12,0) 35%,rgba(13,13,12,.92) 100%)}
+  .hero .txt{position:absolute;left:clamp(18px,4vw,48px);right:clamp(18px,4vw,48px);bottom:clamp(28px,6vh,64px);z-index:2}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin-bottom:18px;display:flex;gap:12px;align-items:center}
+  .kicker::before{content:"";width:28px;height:1px;background:var(--accent)}
+  h1{font-weight:900;text-transform:uppercase;line-height:.86;letter-spacing:-.02em;font-size:clamp(54px,12.5vw,190px)}
+  h1 span{display:block}
+  h1 .out{color:transparent;-webkit-text-stroke:1.5px var(--fg)}
+  .hero .row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-top:28px}
+  .hero p{max-width:440px;color:#c9c7c0;font-size:clamp(15px,1.4vw,18px);line-height:1.5}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border:1px solid var(--fg);font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;transition:background .2s,color .2s}
+  .btn:hover{background:var(--fg);color:var(--bg)}
+  .btn.fill{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.fill:hover{background:#fff;border-color:#fff;color:var(--bg)}
+  .btn svg{width:16px;height:16px}
+
+  /* SECTIONS */
+  section{padding:clamp(70px,10vw,130px) clamp(18px,4vw,48px)}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:clamp(28px,4vw,48px)}
+  h2{font-weight:900;text-transform:uppercase;font-size:clamp(36px,6vw,84px);line-height:.9;letter-spacing:-.02em}
+  .count{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.14em;text-transform:uppercase}
+
+  /* GALLERY masonry */
+  .grid{columns:3 340px;column-gap:clamp(10px,1.4vw,18px)}
+  .tile{break-inside:avoid;margin-bottom:clamp(10px,1.4vw,18px);position:relative;cursor:zoom-in;overflow:hidden;background:var(--bg2);
+        opacity:0;transform:translateY(24px);transition:opacity .8s ease, transform .8s ease}
+  .tile.in{opacity:1;transform:none}
+  .tile img{width:100%;height:auto;transition:transform .7s cubic-bezier(.2,.7,.2,1), filter .5s}
+  .tile:hover img{transform:scale(1.035)}
+  .tile .no{position:absolute;left:10px;bottom:10px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;background:rgba(13,13,12,.7);padding:4px 7px;opacity:0;transition:opacity .3s}
+  .tile:hover .no{opacity:1}
+
+  /* ABOUT */
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,80px);align-items:center;background:var(--bg2)}
+  .about .pic{aspect-ratio:3/4;overflow:hidden}
+  .about .pic img{width:100%;height:100%;object-fit:cover}
+  .about p{color:#c9c7c0;font-size:clamp(16px,1.5vw,19px);line-height:1.65;margin-top:22px;max-width:520px}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+  .tags span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--line);padding:7px 11px;color:var(--mute)}
+
+  /* INSTAGRAM */
+  .ig{text-align:center;position:relative;overflow:hidden}
+  .ig .strip{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:0 auto 54px;max-width:1100px}
+  .ig .strip img{aspect-ratio:1;object-fit:cover;width:100%;filter:grayscale(.3)}
+  .ig .handle{font-weight:900;font-size:clamp(34px,7vw,96px);letter-spacing:-.02em;line-height:1;display:inline-block;margin:14px 0 34px;transition:color .2s;word-break:break-word}
+  .ig .handle:hover{color:var(--accent)}
+  .ig .small{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+
+  footer{padding:28px clamp(18px,4vw,48px);border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+         font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+
+  /* LIGHTBOX */
+  .lb{position:fixed;inset:0;z-index:50;background:rgba(8,8,7,.97);display:none;align-items:center;justify-content:center}
+  .lb.open{display:flex}
+  .lb img{max-width:92vw;max-height:86vh;object-fit:contain;box-shadow:0 30px 80px rgba(0,0,0,.6);user-select:none}
+  .lb button{position:absolute;background:none;border:0;color:var(--fg);cursor:pointer;font-family:var(--mono);font-size:13px;letter-spacing:.14em;padding:18px;opacity:.7}
+  .lb button:hover{opacity:1}
+  .lb .x{top:8px;right:8px;font-size:15px}
+  .lb .prev{left:4px;top:50%;transform:translateY(-50%);font-size:30px}
+  .lb .next{right:4px;top:50%;transform:translateY(-50%);font-size:30px}
+  .lb .cap{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--mute)}
+
+  @media (max-width:760px){
+    .about{grid-template-columns:1fr}
+    .ig .strip{grid-template-columns:repeat(3,1fr)}
+    nav .links a.hide-m{display:none}
+    .lb .prev,.lb .next{top:auto;bottom:4px;transform:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hero img{animation:none;transform:none}
+    .tile{opacity:1;transform:none;transition:none}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#top" class="logo">D.BROZMAN</a>
+  <div class="links">
+    <a href="#galerie">Galerie</a>
+    <a href="#o-mne" class="hide-m">O mně</a>
+    <a href="#instagram">Instagram</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <img src="img/02.jpg" alt="Geodetická koule na střeše, černobílá fotografie">
+  <div class="txt">
+    <div class="kicker">Fotografie architektury</div>
+    <h1><span>Beton,</span><span class="out">sklo</span><span>&amp; světlo</span></h1>
+    <div class="row">
+      <p>Hledám geometrii ve městech — brutalismus, modernu a místa, kolem kterých lidi obvykle jen projdou.</p>
+      <a href="#galerie" class="btn">Prohlédnout fotky ↓</a>
+    </div>
+  </div>
+</header>
+
+<section id="galerie">
+  <div class="sec-head">
+    <h2>Galerie</h2>
+    <div class="count" id="count"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section class="about" id="o-mne">
+  <div class="pic"><img src="img/t/18.jpg" alt="Betonový interiér kostela" loading="lazy"></div>
+  <div>
+    <div class="kicker">O mně</div>
+    <h2>Dominik<br>Brozman</h2>
+    <p>Studuju na umělecké škole a fotím hlavně architekturu. Nejvíc mě baví syrový beton, ostré linie a pohledy, které na budovách hledáš chvíli. Na cestách po Evropě vždycky hledám stavby, které mají charakter.</p>
+    <div class="tags"><span>Architektura</span><span>Brutalismus</span><span>Města</span><span>Interiéry</span><span>Praha</span></div>
+  </div>
+</section>
+
+<section class="ig" id="instagram">
+  <div class="strip" id="strip"></div>
+  <div class="small">Sleduj mě na Instagramu</div>
+  <a class="handle" id="igHandle" href="#" target="_blank" rel="noopener"></a>
+  <div><a class="btn fill" id="igBtn" href="#" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+    Otevřít Instagram</a></div>
+</section>
+
+<footer>
+  <span>© <span id="yr"></span> Dominik Brozman</span>
+  <span>Všechny fotky jsou moje — bez svolení prosím nepoužívat</span>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Fotka">
+  <button class="x" id="lbX" aria-label="Zavřít">ZAVŘÍT ✕</button>
+  <button class="prev" id="lbP" aria-label="Předchozí">←</button>
+  <img id="lbImg" alt="">
+  <button class="next" id="lbN" aria-label="Další">→</button>
+  <div class="cap" id="lbCap"></div>
+</div>
+
+<script>
+  // ====== NASTAVENÍ ======
+  const INSTAGRAM = "tvuj.instagram";   // <- sem patří tvoje jméno na Instagramu (bez @)
+
+  // pořadí fotek v galerii: [soubor, šířka, výška]
+  const PHOTOS = [
+    ["09",1350,1800],["20",1350,1800],["04",1350,1800],["19",1800,1350],["06",1350,1800],["17",1800,1800],
+    ["03",1800,1350],["18",1350,1800],["16",1200,1600],["01",1350,1800],["14",1600,1066],["21",1350,1800],
+    ["11",1600,1200],["10",1200,1600],["05",1200,1600],["15",1200,1600],
+    ["13",750,500],["23",1200,1600],["12",1600,1200],["07",1200,1600],["02",1800,1350]
+  ];
+
+  const grid = document.getElementById('grid');
+  PHOTOS.forEach(([f,w,h],i)=>{
+    const t = document.createElement('figure');
+    t.className='tile';
+    t.innerHTML = `<img src="img/t/${f}.jpg" width="${w}" height="${h}" loading="lazy" alt="Fotografie architektury ${i+1}"><span class="no">${String(i+1).padStart(2,'0')}</span>`;
+    t.addEventListener('click',()=>openLb(i));
+    grid.appendChild(t);
+  });
+  document.getElementById('count').textContent = PHOTOS.length + ' fotografií';
+
+  // reveal on scroll
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -60px 0px'}) : null;
+  document.querySelectorAll('.tile').forEach(t=> io ? io.observe(t) : t.classList.add('in'));
+
+  // instagram
+  const igUrl = 'https://www.instagram.com/' + INSTAGRAM + '/';
+  document.getElementById('igHandle').textContent = '@' + INSTAGRAM;
+  ['igHandle','igBtn'].forEach(id=>document.getElementById(id).href = igUrl);
+  const strip = document.getElementById('strip');
+  ["20","06","17","16","21","23"].forEach(f=>{
+    const a=document.createElement('a'); a.href=igUrl; a.target='_blank'; a.rel='noopener';
+    a.innerHTML=`<img src="img/t/${f}.jpg" loading="lazy" alt="">`; strip.appendChild(a);
+  });
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // nav
+  const nav=document.getElementById('nav');
+  const onScroll=()=>nav.classList.toggle('solid', window.scrollY > 40);
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  // lightbox
+  const lb=document.getElementById('lb'), lbImg=document.getElementById('lbImg'), lbCap=document.getElementById('lbCap');
+  let cur=0;
+  function show(i){
+    cur=(i+PHOTOS.length)%PHOTOS.length;
+    lbImg.src='img/'+PHOTOS[cur][0]+'.jpg';
+    lbCap.textContent=String(cur+1).padStart(2,'0')+' / '+String(PHOTOS.length).padStart(2,'0');
+  }
+  function openLb(i){show(i);lb.classList.add('open');document.body.style.overflow='hidden'}
+  function closeLb(){lb.classList.remove('open');document.body.style.overflow=''}
+  document.getElementById('lbX').onclick=closeLb;
+  document.getElementById('lbP').onclick=e=>{e.stopPropagation();show(cur-1)};
+  document.getElementById('lbN').onclick=e=>{e.stopPropagation();show(cur+1)};
+  lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
+  document.addEventListener('keydown',e=>{
+    if(!lb.classList.contains('open'))return;
+    if(e.key==='Escape')closeLb(); if(e.key==='ArrowLeft')show(cur-1); if(e.key==='ArrowRight')show(cur+1);
+  });
+  let sx=null;
+  lb.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+  lb.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50)show(cur+(dx<0?1:-1));sx=null});
+  document.querySelector('.hero img').addEventListener('click',()=>openLb(PHOTOS.length-1));
+</script>
+</body>
+</html>
